@@ -1,0 +1,55 @@
+$square-width: 5rem;
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+#board-container {
+  position: relative;
+
+  #board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .square {
+      width: $square-width;
+      height: $square-width;
+
+      &.yellow {
+        background: #fffff0;
+      }
+      &.orange {
+        background: #fffaf0;
+      }
+    }
+  }
+
+  .box {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: $square-width;
+    height: $square-width;
+
+    transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      left: 0.5rem;
+      top: 0.5rem;
+      right: 0.5rem;
+      bottom: 0.5rem;
+
+      border-radius: 0.5rem;
+      background: #f6e05e;
+    }
+  }
+}
