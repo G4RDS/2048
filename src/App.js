@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './App.scss'
+
+import BoxItem from './components/BoxItem'
+import TheBoard from './components/TheBoard'
 
 const SIZE = 4
 const LEFT = 37
@@ -7,26 +10,30 @@ const UP = 38
 const RIGHT = 39
 const DOWN = 40
 
-function App() {
-  let crtBoxId = 0
+class Box {
+  constructor({ id, x, y, rank }) {
+    this.id = id
+    this.x = x
+    this.y = y
+    this.rank = rank
+  }
+}
+
+const App = () => {
+  const nextBoxId = useRef(2)
+  const isMoving = useRef(false)
   const [boxes, setBoxes] = useState([
-    {
-      id: 0,
-      x: 0,
-      y: 0,
-      rank: 0,
-    },
-    {
-      id: 1,
-      x: 2,
-      y: 0,
-      rank: 0,
-    },
+    new Box({ id: 0, x: 0, y: 0, rank: 0 }),
+    new Box({ id: 1, x: 0, y: 2, rank: 0 }),
   ])
 
   const moveBoxes = dir => {
-    const _boxes = [...boxes]
+    let _boxes = [...boxes]
     const lines = [[], [], [], []]
+    const nextRanks = {}
+
+    if (isMoving.current) return
+    isMoving.current = true
 
     // 移動方向が縦なら列、横なら行でまとめる
     _boxes.forEach(b => {
@@ -37,7 +44,7 @@ function App() {
       }
     })
 
-    // 各列（行）をソート
+    // 各列（行）を移動方向と逆順にソート
     lines.forEach(l =>
       l.sort((a, b) => {
         switch (dir) {
@@ -68,8 +75,10 @@ function App() {
       for (let i = 1; i < l.length; i++) {
         // 一つ外側のコマと同じランクなら合成
         if (!l[i - 1].delete && l[i - 1].rank === l[i].rank) {
-          l[i - 1].rank++
+          nextRanks[l[i - 1].id] = l[i - 1].rank + 1
           l[i].delete = true
+          l[i].x = l[i - 1].x
+          l[i].y = l[i - 1].y
         } else {
           // 合成しないのなら、一つ外側のコマの隣に移動
           const bef = l[i - 1].delete ? l[i - 2] : l[i - 1]
@@ -83,13 +92,59 @@ function App() {
     })
 
     // ステートを更新
-    setBoxes(
-      lines
-        .map(l => {
-          return l.filter(b => !b.delete)
-        })
-        .flat()
-    )
+    _boxes = lines.flat()
+    setBoxes(_boxes)
+
+    // アニメーション完了後
+    setTimeout(() => {
+      _boxes = _boxes.filter(b => !b.delete)
+
+      // ランクを反映
+      Object.keys(nextRanks).forEach(id => {
+        _boxes.find(b => b.id === Number(id)).rank = nextRanks[id]
+      })
+
+      // ボードがコマでうまっている場合、ゲームを終了する
+      if (_boxes.length >= SIZE * SIZE) {
+        alert('[GAME OVER]\n初めからやり直すにはOKをクリックしてください')
+        setBoxes([
+          new Box({
+            id: nextBoxId.current++,
+            x: Math.floor(Math.random() * SIZE),
+            y: Math.floor(Math.random() * (SIZE / 2)),
+            rank: 0,
+          }),
+          new Box({
+            id: nextBoxId.current++,
+            x: Math.floor(Math.random() * (SIZE / 2)),
+            y: Math.floor(Math.random() * SIZE),
+            rank: 0,
+          }),
+        ])
+        isMoving.current = false
+        return
+      }
+
+      // 新しいコマを出現させる
+      _boxes = spawnBox(_boxes)
+
+      setBoxes(_boxes)
+
+      isMoving.current = false
+    }, 500)
+  }
+
+  const spawnBox = _boxes => {
+    const rank = Math.random() < 0.7 ? 0 : 1
+    let x, y
+
+    do {
+      x = Math.floor(Math.random() * SIZE)
+      y = Math.floor(Math.random() * SIZE)
+      // eslint-disable-next-line no-loop-func
+    } while (_boxes.some(b => b.x === x && b.y === y))
+
+    return [..._boxes, new Box({ id: nextBoxId.current++, x, y, rank })]
   }
 
   const handleKeyDown = e => {
@@ -100,28 +155,12 @@ function App() {
 
   return (
     <div id="app" tabIndex="0" onKeyDown={handleKeyDown}>
-      <div id="board-container">
-        <div id="board">
-          {Array(16)
-            .fill()
-            .map((v, i) => {
-              let cl
-              if (Math.floor((i / 4) % 2) === 0) {
-                cl = i % 2 ? 'orange' : 'yellow'
-              } else {
-                cl = !(i % 2) ? 'orange' : 'yellow'
-              }
-              return <div className={`square ${cl}`} key={i} />
-            })}
-        </div>
-        <div id="boxes">
-          {boxes.map(b => {
-            const style = {
-              transform: `translate(${b.x * 5}rem, ${b.y * 5}rem)`,
-            }
-
-            return <div className="box" style={style} key={b.id} />
-          })}
+      <div className="board-container">
+        <TheBoard />
+        <div className="boxes">
+          {boxes.map(b => (
+            <BoxItem key={b.id} x={b.x} y={b.y} rank={b.rank} />
+          ))}
         </div>
       </div>
     </div>

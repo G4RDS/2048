@@ -1,0 +1,14 @@
+$square-width: 5rem;
+
+.box {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: $square-width;
+  height: $square-width;
+
+  background-size: cover;
+
+  transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}

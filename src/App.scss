@@ -9,10 +9,10 @@ $square-width: 5rem;
   height: 100vh;
 }
 
-#board-container {
+.board-container {
   position: relative;
 
-  #board {
+  .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
@@ -26,30 +26,6 @@ $square-width: 5rem;
       &.orange {
         background: #fffaf0;
       }
-    }
-  }
-
-  .box {
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    width: $square-width;
-    height: $square-width;
-
-    transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      left: 0.5rem;
-      top: 0.5rem;
-      right: 0.5rem;
-      bottom: 0.5rem;
-
-      border-radius: 0.5rem;
-      background: #f6e05e;
     }
   }
 }
