@@ -1,5 +1,6 @@
 export class {
-  constructor() {
+  constructor({ el }) {
+    this.el = el
     this.score = 0
   }
 }
