@@ -1,5 +1,52 @@
+$square-width: 5rem;
+
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+#board-container {
+  position: relative;
+}
+
+#squares {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  .square {
+    width: $square-width;
+    height: $square-width;
+
+    &.yellow {
+      background: #fefcbf;
+    }
+    &.orange {
+      background: #feebc8;
+    }
+  }
+}
+
+#board {
+  .box {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: $square-width;
+    height: $square-width;
+
+    background-size: cover;
+
+    transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
 }

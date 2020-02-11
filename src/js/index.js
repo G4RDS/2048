@@ -1,5 +1,3 @@
-import Master from '/js/models/Master'
+import Master from '/js/models/Master.js'
 
-const master = new Master({
-  el: document.getElementById('app'),
-})
+const master = new Master()

@@ -1,34 +1,28 @@
-import Board from '/js/models/Board'
-import Controller from '/js/models/Controller'
-import ScoreBoard from '/js/models/ScoreBoard'
+import Board from '/js/models/Board.js'
+import Controller from '/js/models/Controller.js'
+import ScoreBoard from '/js/models/ScoreBoard.js'
 
 const DEFAULT_SIZE = 4
 
-export class Master {
-  constructor({ el }) {
-    this.el = el
+export default class Master {
+  constructor() {
+    this.el = document.getElementById('app')
 
-    // board
-    const boardEl = document.createElement('div')
-    boardEl.id = 'board'
-    el.appendChild(boardEl)
     this.board = new Board({
-      el: boardEl,
       size: DEFAULT_SIZE,
     })
+    this.controller = new Controller()
+    this.scoreBoard = new ScoreBoard()
 
-    // controller
-    const controllerEl = document.createElement('div')
-    controllerEl.id = 'controller'
-    el.appendChild(controllerEl)
-    this.controller = new Controller({
-      el: controllerEl,
-    })
+    this.init()
+  }
 
-    // score board
-    const scoreBoardEl = document.createElement('div')
-    scoreBoardEl.id = 'score-board'
-    el.appendChild(scoreBoardEl)
-    this.scoreBoard = new ScoreBoard({ el: scoreBoardEl })
+  /**
+   * ゲームの初期化処理
+   */
+  init() {
+    // 二つのコマをランダムな位置にスポーンさせる
+    this.board.addBox({ rank: 0, coord: null })
+    this.board.addBox({ rank: 0, coord: null })
   }
 }

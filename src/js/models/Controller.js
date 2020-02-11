@@ -1,29 +1,26 @@
-import Button, { BUTTON_DIRECTION } from './Button'
+import Button, { BUTTON_DIRECTION } from './Button.js'
 
-export class Controller {
-  constructor({ el }) {
-    this.el = el
+export default class Controller {
+  constructor() {
+    this.el = document.getElementById('controller')
 
-    const leftButtonEl = document.createElement('button')
-    leftButtonEl.classList.add('left')
-    el.appendChild(leftButtonEl)
-    const upButtonEl = document.createElement('button')
-    upButtonEl.classList.add('up')
-    el.appendChild(upButtonEl)
-    const rightButtonEl = document.createElement('button')
-    rightButtonEl.classList.add('right')
-    el.appendChild(rightButtonEl)
-    const downButtonEl = document.createElement('button')
-    downButtonEl.classList.add('down')
-    el.appendChild(downButtonEl)
     this.buttons = {
-      left: new Button({ el: leftButtonEl, directin: BUTTON_DIRECTION.LEFT }),
+      left: new Button({
+        el: document.getElementById('left-btn'),
+        directin: BUTTON_DIRECTION.LEFT,
+      }),
       right: new Button({
-        el: rightButtonEl,
+        el: document.getElementById('right-btn'),
         directin: BUTTON_DIRECTION.RIGHT,
       }),
-      up: new Button({ el: upButtonEl, directin: BUTTON_DIRECTION.UP }),
-      down: new Button({ el: downButtonEl, directin: BUTTON_DIRECTION.DOWN }),
+      up: new Button({
+        el: document.getElementById('up-btn'),
+        directin: BUTTON_DIRECTION.UP,
+      }),
+      down: new Button({
+        el: document.getElementById('down-btn'),
+        directin: BUTTON_DIRECTION.DOWN,
+      }),
     }
     this.isDisabled = false
   }

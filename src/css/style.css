@@ -9,4 +9,53 @@
       -ms-flex-pack: center;
           justify-content: center;
 }
+
+#app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#board-container {
+  position: relative;
+}
+
+#squares {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+}
+
+#squares .square {
+  width: 5rem;
+  height: 5rem;
+}
+
+#squares .square.yellow {
+  background: #fefcbf;
+}
+
+#squares .square.orange {
+  background: #feebc8;
+}
+
+#board .box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5rem;
+  height: 5rem;
+  background-size: cover;
+  -webkit-transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
 /*# sourceMappingURL=style.css.map */

@@ -5,7 +5,7 @@ export const BUTTON_DIRECTION = {
   DOWN: 3,
 }
 
-export class Button {
+export default class Button {
   constructor({ direction }) {
     this.direction = direction
     this.isDisabled = false
