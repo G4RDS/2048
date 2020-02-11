@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react'
 import './App.scss'
 
-import BoxItem from './components/BoxItem'
+import Box from './models/Box'
+import Coord from './models/Coord'
+
 import TheBoard from './components/TheBoard'
 
 const SIZE = 4
@@ -10,22 +12,13 @@ const UP = 38
 const RIGHT = 39
 const DOWN = 40
 
-class Box {
-  constructor({ id, x, y, rank }) {
-    this.id = id
-    this.x = x
-    this.y = y
-    this.rank = rank
-  }
-}
-
 const App = () => {
-  const nextBoxId = useRef(2)
-  const isMoving = useRef(false)
   const [boxes, setBoxes] = useState([
-    new Box({ id: 0, x: 0, y: 0, rank: 0 }),
-    new Box({ id: 1, x: 0, y: 2, rank: 0 }),
+    new Box({ rank: 0, coord: new Coord({ x: 0, y: 0 }) }),
+    new Box({ rank: 0, coord: new Coord({ x: 0, y: 2 }) }),
   ])
+
+  const isMoving = useRef(false)
 
   const moveBoxes = dir => {
     let _boxes = [...boxes]
@@ -109,15 +102,17 @@ const App = () => {
         alert('[GAME OVER]\n初めからやり直すにはOKをクリックしてください')
         setBoxes([
           new Box({
-            id: nextBoxId.current++,
-            x: Math.floor(Math.random() * SIZE),
-            y: Math.floor(Math.random() * (SIZE / 2)),
+            coord: new Coord({
+              x: Math.floor(Math.random() * SIZE),
+              y: Math.floor(Math.random() * (SIZE / 2)),
+            }),
             rank: 0,
           }),
           new Box({
-            id: nextBoxId.current++,
-            x: Math.floor(Math.random() * (SIZE / 2)),
-            y: Math.floor(Math.random() * SIZE),
+            coord: new Coord({
+              x: Math.floor(Math.random() * (SIZE / 2)),
+              y: Math.floor(Math.random() * SIZE),
+            }),
             rank: 0,
           }),
         ])
@@ -144,7 +139,7 @@ const App = () => {
       // eslint-disable-next-line no-loop-func
     } while (_boxes.some(b => b.x === x && b.y === y))
 
-    return [..._boxes, new Box({ id: nextBoxId.current++, x, y, rank })]
+    return [..._boxes, new Box({ coord: new Coord({ x, y }), rank })]
   }
 
   const handleKeyDown = e => {
@@ -156,12 +151,7 @@ const App = () => {
   return (
     <div id="app" tabIndex="0" onKeyDown={handleKeyDown}>
       <div className="board-container">
-        <TheBoard />
-        <div className="boxes">
-          {boxes.map(b => (
-            <BoxItem key={b.id} x={b.x} y={b.y} rank={b.rank} />
-          ))}
-        </div>
+        <TheBoard boxes={boxes} />
       </div>
     </div>
   )
