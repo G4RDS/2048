@@ -11,8 +11,11 @@ export default class Master {
     this.board = new Board({
       size: DEFAULT_SIZE,
     })
-    this.controller = new Controller()
+    this.controller = new Controller({ listener: this.onButtonPressed })
     this.scoreBoard = new ScoreBoard()
+
+    // trueのとき、アニメーションなどが行われているため、ターンは行わない
+    this.isWaiting = false
 
     this.init()
   }
@@ -24,5 +27,16 @@ export default class Master {
     // 二つのコマをランダムな位置にスポーンさせる
     this.board.addBox({ rank: 0, coord: null })
     this.board.addBox({ rank: 0, coord: null })
+
+    // 待機状態をfalseに
+    this.isWaiting = false
+  }
+
+  /**
+   * コントローラのボタンのクリックイベントリスナ
+   */
+  onButtonPressed(direction) {
+    console.log(`button pressed: ${direction}`)
+    this.scoreBoard.updateScore(direction)
   }
 }

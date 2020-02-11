@@ -6,8 +6,12 @@ export const BUTTON_DIRECTION = {
 }
 
 export default class Button {
-  constructor({ direction }) {
-    this.direction = direction
+  constructor({ el, direction, listener }) {
     this.isDisabled = false
+
+    this.el = el
+    this.direction = direction
+
+    this.el.addEventListener('click', listener)
   }
 }
