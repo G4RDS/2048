@@ -23,9 +23,20 @@ export default class Master {
   }
 
   /**
+   * コントローラのボタンのクリックイベントリスナ
+   */
+  onButtonPressed(direction) {
+    this.moveBoxes(direction)
+  }
+
+  /**
    * ゲームの初期化処理
    */
   init() {
+    this.board = new Board({
+      size: DEFAULT_SIZE,
+    })
+
     // 二つのコマをランダムな位置にスポーンさせる
     this.board.addBox({ rank: 0, coord: null })
     this.board.addBox({ rank: 0, coord: null })
@@ -35,10 +46,28 @@ export default class Master {
   }
 
   /**
-   * コントローラのボタンのクリックイベントリスナ
+   * ランダムな位置にランダムなランクのコマをスポーンさせる
    */
-  onButtonPressed(direction) {
-    console.log(`button pressed: ${direction}`)
-    this.scoreBoard.updateScore(direction)
+  spawnRandomBox() {
+    this.board.addBox({ rank: Math.random() < 0.7 ? 0 : 1, coord: null })
+  }
+
+  /**
+   * コマを移動させる
+   */
+  moveBoxes(direction) {
+    this.board.moveBoxes(direction).then(() => {
+      // ボードがコマでうまっている場合、ゲームを終了する
+      if (this.board.getIsBoardFilled()) {
+        alert('[GAME OVER]\n初めからやり直すにはOKをクリックしてください')
+
+        this.init()
+
+        return
+      }
+
+      // 新しいコマを出現させる
+      this.spawnRandomBox()
+    })
   }
 }

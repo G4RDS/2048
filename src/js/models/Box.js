@@ -1,8 +1,11 @@
-export default class Box {
+class Box {
   constructor({ el, rank, coord }) {
     this.el = el
     this.rank = rank
     this.coord = coord
+
+    // インスタンスにIDを付与
+    this.id = this.proto.nextId++
 
     this.updateStyle()
   }
@@ -30,3 +33,9 @@ export default class Box {
     this.updateStyle()
   }
 }
+
+Box.prototype.proto = {
+  nextId: 0,
+}
+
+export default Box
