@@ -1,4 +1,4 @@
-export default class {
+export default class ScoreBoard {
   constructor() {
     this.el = document.getElementById('score-board')
     this.updateScore(0)

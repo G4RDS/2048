@@ -11,7 +11,9 @@ export default class Master {
     this.board = new Board({
       size: DEFAULT_SIZE,
     })
-    this.controller = new Controller({ listener: this.onButtonPressed })
+    this.controller = new Controller({
+      listener: this.onButtonPressed.bind(this), // thisをbindしないと、イベントリスナが呼ばれるときにthisがその呼ぶインスタンスになってしまう
+    })
     this.scoreBoard = new ScoreBoard()
 
     // trueのとき、アニメーションなどが行われているため、ターンは行わない
