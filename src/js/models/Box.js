@@ -4,11 +4,7 @@ export default class Box {
     this.rank = rank
     this.coord = coord
 
-    // コマノードに「rank-0」といったクラスを付与
-    this.el.classList.add(`rank-${this.rank}`)
-
-    // コマノードの背景をランクに対応したイラストにする
-    this.el.style.backgroundImage = `url('/img/boxes/${rank}.png')`
+    this.updateStyle()
   }
 
   /**
