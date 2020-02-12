@@ -1,6 +1,6 @@
 export default class ScoreBoard {
   constructor() {
-    this.el = document.getElementById('score-board')
+    this.el = document.getElementById('score-board--value')
     this.updateScore(0)
   }
 

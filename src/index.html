@@ -5,38 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2048</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://kit.fontawesome.com/f41be18fb7.js"></script>
   </head>
 
   <body>
     <div class="container">
       <div id="app">
-        <div id="board-container">
-          <div id="squares">
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
-            <div class="square yellow"></div>
-            <div class="square orange"></div>
+        <div id="container">
+          <div id="board-container">
+            <div id="squares">
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+              <div class="square yellow"></div>
+              <div class="square orange"></div>
+            </div>
+            <div id="board"></div>
           </div>
-          <div id="board"></div>
-        </div>
-        <div id="score-board"></div>
-        <div id="controller">
-          <button id="left-button">←</button>
-          <button id="right-button">→</button>
-          <button id="up-button">↑</button>
-          <button id="down-button">↓</button>
+          <div id="score-board">
+            <div id="score-board--label">スコア</div>
+            <div id="score-board--value"></div>
+          </div>
+          <div id="controller">
+            <button id="controller--left" class="button">
+              <i class="far fa-arrow-left"></i>
+            </button>
+            <button id="controller--right" class="button">
+              <i class="far fa-arrow-right"></i>
+            </button>
+            <button id="controller--up" class="button">
+              <i class="far fa-arrow-up"></i>
+            </button>
+            <button id="controller--down" class="button">
+              <i class="far fa-arrow-down"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>

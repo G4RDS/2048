@@ -24,8 +24,25 @@
   height: 100vh;
 }
 
+#container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20rem 10rem;
+      grid-template-columns: 20rem 10rem;
+  -ms-grid-rows: 10rem 10rem;
+      grid-template-rows: 10rem 10rem;
+      grid-template-areas: 'board score' 'board controller';
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+  max-width: 700px;
+}
+
 #board-container {
   position: relative;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 1;
+  grid-area: board;
 }
 
 #squares {
@@ -57,5 +74,91 @@
   background-size: cover;
   -webkit-transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+#score-board {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: score;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  height: 2rem;
+  border: 2px solid #ed8936;
+  border-radius: 4px;
+}
+
+#score-board--label {
+  padding: 0 1rem;
+  background: #ed8936;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  line-height: 2rem;
+}
+
+#score-board--value {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 1rem;
+  color: #4a5568;
+  font-weight: bold;
+  text-align: right;
+  line-height: 2rem;
+}
+
+#controller {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: controller;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: 3rem 3rem;
+      grid-template-rows: 3rem 3rem;
+      grid-template-areas: '. up .' 'left down right';
+  grid-gap: 0.5rem;
+  -ms-flex-line-pack: end;
+      align-content: end;
+}
+
+#controller--up {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: up;
+}
+
+#controller--left {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: left;
+}
+
+#controller--down {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: down;
+}
+
+#controller--right {
+  -ms-grid-row: 2;
+  -ms-grid-column: 3;
+  grid-area: right;
+}
+
+#controller .button {
+  border: none;
+  border-radius: 0.5rem;
+  background: #ed8936;
+  color: #fff;
+  font-size: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

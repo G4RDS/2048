@@ -15,8 +15,21 @@ $square-width: 5rem;
   height: 100vh;
 }
 
+#container {
+  display: grid;
+  grid-template-columns: ($square-width * 4) ($square-width * 2);
+  grid-template-rows: ($square-width * 2) ($square-width * 2);
+  grid-template-areas:
+    'board score'
+    'board controller';
+  column-gap: 1rem;
+
+  max-width: 700px;
+}
+
 #board-container {
   position: relative;
+  grid-area: board;
 }
 
 #squares {
@@ -48,5 +61,71 @@ $square-width: 5rem;
     background-size: cover;
 
     transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+#score-board {
+  grid-area: score;
+
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+
+  height: 2rem;
+  border: 2px solid #ed8936;
+  border-radius: 4px;
+
+  &--label {
+    padding: 0 1rem;
+    background: #ed8936;
+
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2rem;
+  }
+  &--value {
+    flex: 1;
+
+    padding: 0 1rem;
+
+    color: #4a5568;
+    font-weight: bold;
+    text-align: right;
+    line-height: 2rem;
+  }
+}
+
+#controller {
+  grid-area: controller;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 3rem 3rem;
+  grid-template-areas:
+    '. up .'
+    'left down right';
+  grid-gap: 0.5rem;
+  align-content: end;
+
+  &--up {
+    grid-area: up;
+  }
+  &--left {
+    grid-area: left;
+  }
+  &--down {
+    grid-area: down;
+  }
+  &--right {
+    grid-area: right;
+  }
+
+  .button {
+    border: none;
+    border-radius: 0.5rem;
+    background: #ed8936;
+
+    color: #fff;
+    font-size: 1rem;
   }
 }

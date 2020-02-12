@@ -11,22 +11,22 @@ export default class Controller {
      */
     this.buttons = {
       left: new Button({
-        el: document.getElementById('left-button'),
+        el: document.getElementById('controller--left'),
         direction: BUTTON_DIRECTION.LEFT,
         listener: () => this.notifyPressEvent(BUTTON_DIRECTION.LEFT),
       }),
       right: new Button({
-        el: document.getElementById('right-button'),
+        el: document.getElementById('controller--right'),
         direction: BUTTON_DIRECTION.RIGHT,
         listener: () => this.notifyPressEvent(BUTTON_DIRECTION.RIGHT),
       }),
       up: new Button({
-        el: document.getElementById('up-button'),
+        el: document.getElementById('controller--up'),
         direction: BUTTON_DIRECTION.UP,
         listener: () => this.notifyPressEvent(BUTTON_DIRECTION.UP),
       }),
       down: new Button({
-        el: document.getElementById('down-button'),
+        el: document.getElementById('controller--down'),
         direction: BUTTON_DIRECTION.DOWN,
         listener: () => this.notifyPressEvent(BUTTON_DIRECTION.DOWN),
       }),
