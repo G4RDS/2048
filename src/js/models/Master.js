@@ -25,8 +25,10 @@ export default class Master {
   /**
    * コントローラのボタンのクリックイベントリスナ
    */
-  onButtonPressed(direction) {
-    this.moveBoxes(direction)
+  async onButtonPressed(direction) {
+    this.controller.disable()
+    await this.moveBoxes(direction)
+    this.controller.enable()
   }
 
   /**
@@ -56,7 +58,7 @@ export default class Master {
    * コマを移動させる
    */
   moveBoxes(direction) {
-    this.board.moveBoxes(direction).then(() => {
+    return this.board.moveBoxes(direction).then(() => {
       // ボードがコマでうまっている場合、ゲームを終了する
       if (this.board.getIsBoardFilled()) {
         alert('[GAME OVER]\n初めからやり直すにはOKをクリックしてください')

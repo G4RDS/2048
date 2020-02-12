@@ -31,7 +31,6 @@ export default class Controller {
         listener: () => this.notifyPressEvent(BUTTON_DIRECTION.DOWN),
       }),
     }
-    this.isDisabled = false
   }
 
   /**
@@ -42,5 +41,19 @@ export default class Controller {
     if (this.listener == null) return
 
     this.listener(direction)
+  }
+
+  /**
+   * 全てのボタンを無効化
+   */
+  disable() {
+    Object.values(this.buttons).forEach(b => b.disable())
+  }
+
+  /**
+   * 全てのボタンを有効化
+   */
+  enable() {
+    Object.values(this.buttons).forEach(b => b.enable())
   }
 }

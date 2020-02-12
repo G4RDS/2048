@@ -7,11 +7,23 @@ export const BUTTON_DIRECTION = {
 
 export default class Button {
   constructor({ el, direction, listener }) {
-    this.isDisabled = false
-
     this.el = el
     this.direction = direction
 
     this.el.addEventListener('click', listener)
+  }
+
+  /**
+   * ボタンを無効化
+   */
+  disable() {
+    this.el.disabled = true
+  }
+
+  /**
+   * ボタンを有効化
+   */
+  enable() {
+    this.el.disabled = false
   }
 }
