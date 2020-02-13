@@ -73,6 +73,7 @@ export default class Board {
 
   /**
    * 全てのコマを一度に同じ方向に移動させる
+   * Promiseを返し、アニメーション完了後に次のステータスと加算するスコアでリゾルブする
    */
   moveBoxes(dir) {
     const lines = [[], [], [], []]
@@ -142,18 +143,27 @@ export default class Board {
     // アニメーション完了後に解決するPromiseをリターン
     return new Promise(resolve => {
       setTimeout(() => {
+        let score = 0
+
         // deleteフラグが立っているコマノードを除去
         this.boxes.forEach((b, i) => {
           if (b.delete) this.deleteBox(i)
         })
 
         // ランクを反映
-        Object.keys(nextRanks).forEach(id => {
-          this.boxes.find(b => b.id === Number(id)).rank = nextRanks[id]
+        Object.entries(nextRanks).forEach(([id, rank]) => {
+          score += rank * 100 // スコアをプラス
+
+          // rankが10になるとゲームをクリアにする
+          if (rank === 10) {
+            resolve({ status: 'CLEAR', score })
+          }
+
+          this.boxes.find(b => b.id === Number(id)).rank = rank
         })
         this.boxes.forEach(b => b.updateStyle())
 
-        resolve()
+        resolve({ status: 'CONTINUE', score })
       }, 500)
     })
   }

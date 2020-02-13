@@ -8,4 +8,9 @@ export default class ScoreBoard {
     this.score = score
     this.el.textContent = this.score
   }
+
+  addScore(score) {
+    this.score += score
+    this.el.textContent = this.score
+  }
 }

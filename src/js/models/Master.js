@@ -58,10 +58,22 @@ export default class Master {
    * コマを移動させる
    */
   moveBoxes(direction) {
-    return this.board.moveBoxes(direction).then(() => {
+    return this.board.moveBoxes(direction).then(({ status, score }) => {
+      this.scoreBoard.addScore(score)
+
+      if (status === 'CLEAR') {
+        alert(
+          `[GAME CLEAR]\nビックバンが発生し、ゲームクリアとなりました。\n最終スコア：${this.scoreBoard.score}`
+        )
+
+        return
+      }
+
       // ボードがコマでうまっている場合、ゲームを終了する
       if (this.board.getIsBoardFilled()) {
-        alert('[GAME OVER]\n初めからやり直すにはOKをクリックしてください')
+        alert(
+          `[GAME OVER]\n初めからやり直すにはOKをクリックしてください\n最終スコア：${this.scoreBoard.core}`
+        )
 
         this.init()
 
