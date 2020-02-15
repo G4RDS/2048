@@ -1,3 +1,3 @@
 import Master from '/js/models/Master.js'
 
-const master = new Master()
+window.master = new Master()
