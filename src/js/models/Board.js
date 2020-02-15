@@ -152,7 +152,8 @@ export default class Board {
 
         // ランクを反映
         Object.entries(nextRanks).forEach(([id, rank]) => {
-          score += rank * 100 // スコアをプラス
+          // スコアをプラス
+          score += rank * 100
 
           // rankが10になるとゲームをクリアにする
           if (rank === 10) {

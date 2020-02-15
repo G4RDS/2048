@@ -1,6 +1,7 @@
 import Board from '/js/models/Board.js'
 import Controller from '/js/models/Controller.js'
 import ScoreBoard from '/js/models/ScoreBoard.js'
+import FinishEffect from './FinishEffect.js'
 
 const DEFAULT_SIZE = 4
 
@@ -15,6 +16,9 @@ export default class Master {
       listener: this.onButtonPressed.bind(this), // thisをbindしないと、イベントリスナが呼ばれるときにthisがその呼ぶインスタンスになってしまう
     })
     this.scoreBoard = new ScoreBoard()
+    this.finishEffect = new FinishEffect({
+      el: document.getElementById('finish-effect'),
+    })
 
     // trueのとき、アニメーションなどが行われているため、ターンは行わない
     this.isWaiting = false
@@ -57,31 +61,36 @@ export default class Master {
   /**
    * コマを移動させる
    */
-  moveBoxes(direction) {
-    return this.board.moveBoxes(direction).then(({ status, score }) => {
-      this.scoreBoard.addScore(score)
+  async moveBoxes(direction) {
+    const { status, score } = await this.board.moveBoxes(direction)
 
-      if (status === 'CLEAR') {
-        alert(
-          `[GAME CLEAR]\nビックバンが発生し、ゲームクリアとなりました。\n最終スコア：${this.scoreBoard.score}`
-        )
+    this.scoreBoard.addScore(score)
 
-        return
-      }
+    if (status === 'CLEAR') {
+      await this.finishEffect.show()
 
-      // ボードがコマでうまっている場合、ゲームを終了する
-      if (this.board.getIsBoardFilled()) {
-        alert(
-          `[GAME OVER]\n初めからやり直すにはOKをクリックしてください\n最終スコア：${this.scoreBoard.core}`
-        )
+      alert(
+        `[GAME CLEAR]\nビックバンが発生しました！ ゲームクリア！\n最終スコア：${this.scoreBoard.score}`
+      )
 
-        this.init()
+      this.finishEffect.hide()
+      this.init()
 
-        return
-      }
+      return
+    }
 
-      // 新しいコマを出現させる
-      this.spawnRandomBox()
-    })
+    // ボードがコマでうまっている場合、ゲームを終了する
+    if (this.board.getIsBoardFilled()) {
+      alert(
+        `[GAME OVER]\n初めからやり直すにはOKをクリックしてください\n最終スコア：${this.scoreBoard.core}`
+      )
+
+      this.init()
+
+      return
+    }
+
+    // 新しいコマを出現させる
+    this.spawnRandomBox()
   }
 }

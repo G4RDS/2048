@@ -166,4 +166,43 @@ body {
   color: #fff;
   font-size: 1rem;
 }
+
+#finish-effect {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+#finish-effect.shown {
+  display: block;
+  -webkit-animation: finish-effect__show 500ms cubic-bezier(0.19, 1, 0.22, 1) both;
+          animation: finish-effect__show 500ms cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@-webkit-keyframes finish-effect__show {
+  0% {
+    -webkit-transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes finish-effect__show {
+  0% {
+    -webkit-transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+  }
+}
 /*# sourceMappingURL=style.css.map */
