@@ -82,7 +82,7 @@ export default class Master {
     // ボードがコマでうまっている場合、ゲームを終了する
     if (this.board.getIsBoardFilled()) {
       alert(
-        `[GAME OVER]\n初めからやり直すにはOKをクリックしてください\n最終スコア：${this.scoreBoard.core}`
+        `[GAME OVER]\n初めからやり直すにはOKをクリックしてください\n最終スコア：${this.scoreBoard.score}`
       )
 
       this.init()
